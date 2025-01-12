@@ -1,5 +1,5 @@
 import React from "react";
-import productData, { Product } from "./dataSource"; // Import the product data from datasource.ts
+import productData, { Product } from "../dataSource"; // Import the product data from datasource.ts
 import { ProductCard } from "./ProductCard";
 
 // This is the component that will render all products
