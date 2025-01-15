@@ -110,3 +110,13 @@ body {
 .product-card .remove-button:hover {
   background-color: #d43a3a;
 }
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  margin-right: 6px;
+}
