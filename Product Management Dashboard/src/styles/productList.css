@@ -120,3 +120,19 @@ button {
   transition: background-color 0.3s;
   margin-right: 6px;
 }
+input[type="text"] {
+  background-color: whITE;
+  color: black;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+  margin: 5px;
+  border: solid 2px black;
+}
+
+label {
+  color: black;
+  display: block;
+}

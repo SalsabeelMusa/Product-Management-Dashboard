@@ -1,5 +1,5 @@
 import React from "react";
-import productData from "../dataSource";
+import { productData } from "../dataSource";
 import "../styles/productList.css";
 
 interface ProductCardProps {

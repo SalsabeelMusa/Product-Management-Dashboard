@@ -1,4 +1,4 @@
-export type Product = {
+export type IProduct = {
   id: string;
   image: string;
   title: string;
@@ -17,7 +17,7 @@ import carImage from "./assets/sport-car.png";
 import imageImage from "./assets/image.png";
 import clothImage from "./assets/polo-shirt.png";
 
-const productData: Product[] = [
+export const productData: IProduct[] = [
   {
     id: "1",
     image: sportImage,
@@ -116,4 +116,36 @@ const productData: Product[] = [
   },
 ];
 
-export default productData;
+export type IformInputList = {
+  type: string;
+  label: string;
+  id: string;
+  name: string;
+};
+
+export const formInputList: IformInputList[] = [
+  {
+    type: "text",
+    label: "Product Title",
+    id: "title",
+    name: "title",
+  },
+  {
+    type: "text",
+    label: "Product Description",
+    id: "description",
+    name: "description",
+  },
+  {
+    type: "text",
+    label: "Product Image URL",
+    id: "imageURL",
+    name: "imageURL",
+  },
+  {
+    type: "text",
+    label: "Product Price",
+    id: "price",
+    name: "price",
+  },
+];
