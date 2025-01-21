@@ -136,3 +136,9 @@ label {
   color: black;
   display: block;
 }
+
+.error-message {
+  color: red;
+  font-weight: bolder;
+  font-size: small;
+}

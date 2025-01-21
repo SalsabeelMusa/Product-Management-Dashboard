@@ -120,7 +120,7 @@ export type IformInputList = {
   type: string;
   label: string;
   id: string;
-  name: string;
+  name: "title" | "description" | "image" | "price"; //so important
 };
 
 export const formInputList: IformInputList[] = [
@@ -139,8 +139,8 @@ export const formInputList: IformInputList[] = [
   {
     type: "text",
     label: "Product Image URL",
-    id: "imageURL",
-    name: "imageURL",
+    id: "image",
+    name: "image",
   },
   {
     type: "text",
