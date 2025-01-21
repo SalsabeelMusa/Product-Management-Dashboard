@@ -149,3 +149,26 @@ export const formInputList: IformInputList[] = [
     name: "price",
   },
 ];
+
+export const colors: string[] = [
+  "#FF5733",
+  "#33FF57",
+  "#3357FF",
+  "#F1C40F",
+  "#8E44AD",
+  "#E74C3C",
+  "#2ECC71",
+  "#3498DB",
+  "#1ABC9C",
+  "#D35400",
+  "#A0302B",
+  "#16A085",
+  "#27AE60",
+  "#2980B9",
+  "#8E44AD",
+  "#F39C12",
+  "#E67E22",
+  "#BDC3C7",
+  "#7F8C8D",
+  "#2C3E50",
+];

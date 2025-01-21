@@ -3,9 +3,12 @@ import ProductList from "./components/ProductCard";
 import Modal from "./components/Modal";
 import { Button } from "@headlessui/react";
 import "./styles/productList.css";
-import { formInputList, IformInputList, IProduct } from "./dataSource";
+import { colors, formInputList, IformInputList, IProduct } from "./dataSource";
 import { Input } from "./components/Input";
 import { productValidation } from "./validation/productValidation";
+import CircleColor from "./components/CircleColor";
+import { v4 as uuidv4 } from "uuid";
+
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<IProduct>({
@@ -20,9 +23,8 @@ const App = () => {
       brandIcon: "",
     },
   });
-
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
-
+  const [productColors, setProductColors] = useState<string[]>([]);
   function closeModal() {
     setFormData({
       id: "",
@@ -79,6 +81,7 @@ const App = () => {
     closeModal();
   }
 
+  //render
   const renderFormInputList = formInputList.map((input) => (
     <div key={input.id}>
       <label htmlFor={input.id}>{input.label}</label>
@@ -96,6 +99,24 @@ const App = () => {
     </div>
   ));
 
+  //render
+
+  const renderProductColors = colors.map((color) => (
+    <CircleColor
+      key={color}
+      color={color}
+      onClick={() => {
+        if (productColors.includes(color)) {
+          setProductColors((prev) => prev.filter((item) => item != color));
+          return;
+        }
+        setProductColors((prev) => [...prev, color]);
+      }}
+    />
+  ));
+
+  console.log(colors);
+
   return (
     <>
       <Button onClick={openModal}>Add a Product</Button>
@@ -104,7 +125,31 @@ const App = () => {
       <Modal isOpen={isOpen} closeModal={closeModal} title="Add a new Product">
         <form onSubmit={handleSubmit}>
           {renderFormInputList}
-          <Button type="submit">Add</Button>
+          <div style={{ width: "300px" }}>{renderProductColors}</div>
+          <div
+            style={{
+              width: "300px",
+              color: "white",
+              padding: "10px",
+            }}
+          >
+            {productColors.map((color) => (
+              <span
+                key={uuidv4()} // Generates a unique key
+                style={{
+                  display: "inline-block",
+                  backgroundColor: color, // Apply color to each span
+                  margin: "2px",
+                  fontSize: "15px",
+                  borderRadius: "10%",
+                  padding: "2px",
+                }}
+              >
+                {color}
+              </span>
+            ))}
+          </div>
+          ;<Button type="submit">Add</Button>
           <Button type="button" onClick={closeModal}>
             Cancel
           </Button>
