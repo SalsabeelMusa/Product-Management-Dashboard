@@ -1,5 +1,5 @@
 import React from "react";
-import { productData } from "../dataSource";
+import { IProduct, productData } from "../dataSource";
 import "../styles/productList.css";
 
 interface ProductCardProps {
@@ -55,8 +55,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
     </div>
   );
 };
-
-const ProductList: React.FC = () => {
+interface ProductListProps {
+  products: IProduct[];
+}
+const ProductList: React.FC<ProductListProps> = ({ products }) => {
   const handleEdit = (id: string) => {
     console.log("Editing product with ID:", id);
   };
@@ -67,7 +69,7 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="product-list">
-      {productData.map((product) => (
+      {products.map((product) => (
         <ProductCard
           key={product.id}
           image={product.image}

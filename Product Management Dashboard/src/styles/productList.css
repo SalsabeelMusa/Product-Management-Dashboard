@@ -12,6 +12,7 @@ body {
   gap: 16px;
   padding: 24px;
   min-height: 100vh;
+  color: black;
 }
 
 .product-card {
