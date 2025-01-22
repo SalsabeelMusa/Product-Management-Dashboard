@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 export type IProduct = {
   id: string;
   image: string;
@@ -110,4 +111,73 @@ export const colors: string[] = [
   "#BDC3C7",
   "#7F8C8D",
   "#2C3E50",
+];
+
+export interface ICategory {
+  id: string;
+  brandName: string;
+  brandIcon: string;
+}
+
+export const categories: ICategory[] = [
+  {
+    id: uuidv4(),
+    brandName: "Electronics",
+    brandIcon:
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Clothing",
+    brandIcon:
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Home & Kitchen",
+    brandIcon:
+      "https://images.unsplash.com/photo-1595520232445-86dd52bc0b82?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Sports & Outdoors",
+    brandIcon:
+      "https://images.unsplash.com/photo-1562771242-711b5aa642a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Books",
+    brandIcon:
+      "https://images.unsplash.com/photo-1514894780887-121968d00567?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Beauty & Personal Care",
+    brandIcon:
+      "https://images.unsplash.com/photo-1581752927610-7ba01da0f49d?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Toys & Games",
+    brandIcon:
+      "https://images.unsplash.com/photo-1546554137-f86b9593a222?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Automotive",
+    brandIcon:
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Health & Wellness",
+    brandIcon:
+      "https://images.unsplash.com/photo-1576092768833-4b0e14e83cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
+  {
+    id: uuidv4(),
+    brandName: "Furniture",
+    brandIcon:
+      "https://images.unsplash.com/photo-1585121601708-46c2f02b65b6?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+  },
 ];

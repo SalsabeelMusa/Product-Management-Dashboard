@@ -67,6 +67,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
     console.log("Removing product with ID:", id);
   };
 
+  console.log(products.length);
   return (
     <div className="product-list">
       {products.map((product) => (

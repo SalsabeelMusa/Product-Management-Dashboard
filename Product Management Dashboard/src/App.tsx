@@ -3,11 +3,19 @@ import ProductList from "./components/ProductCard";
 import Modal from "./components/Modal";
 import { Button } from "@headlessui/react";
 import "./styles/productList.css";
-import { colors, formInputList, IProduct, productData } from "./dataSource";
+import {
+  categories,
+  colors,
+  formInputList,
+  ICategory,
+  IProduct,
+  productData,
+} from "./dataSource";
 import { Input } from "./components/Input";
 import { productValidation } from "./validation/productValidation";
 import CircleColor from "./components/CircleColor";
 import { v4 as uuidv4 } from "uuid";
+import Select from "./components/Select";
 
 const App = () => {
   //STATES
@@ -19,15 +27,14 @@ const App = () => {
     description: "",
     colors: [],
     price: "",
-    category: {
-      brandName: "",
-      brandIcon: "",
-    },
+    category: categories[0],
   });
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
   const [productColors, setProductColors] = useState<string[]>([]);
   const [products, setProducts] = useState<IProduct[]>(productData);
-
+  const [selectedCategory, setSelectedCategory] = useState<ICategory>(
+    categories[0]
+  );
   //HANDLERS
   function closeModal() {
     setFormData({
@@ -37,12 +44,10 @@ const App = () => {
       description: "",
       colors: [],
       price: "",
-      category: {
-        brandName: "",
-        brandIcon: "",
-      },
+      category: categories[0],
     });
     setIsOpen(false);
+    setProductColors([]);
     setFormErrors({});
   }
 
@@ -74,21 +79,23 @@ const App = () => {
 
     const errors = productValidation(formData);
     setFormErrors(errors);
-    if (Object.keys(errors).length > 0) {
+    const hasNonEmptyValue = Object.values(errors).some(
+      (value) => value !== ""
+    );
+    if (hasNonEmptyValue) {
       console.log("Validation Errors:", errors);
       return;
     }
 
-    // Add a unique ID
     const newProduct: IProduct = {
       ...formData,
-      id: uuidv4(), // Ensure each product has a unique ID
+      id: uuidv4(), //add a unique ID
       colors: productColors,
+      category: selectedCategory,
     };
 
-    console.log("Final Form Data Submitted:", newProduct);
-
     setProducts((prev) => [newProduct, ...prev]);
+    console.log("Final Form Data Submitted:", newProduct);
     setFormData({
       id: "",
       image: "",
@@ -104,7 +111,7 @@ const App = () => {
     setProductColors([]);
     closeModal();
   };
-  //render
+  //render form inputs
   const renderFormInputList = formInputList.map((input) => (
     <div key={input.id}>
       <label htmlFor={input.id}>{input.label}</label>
@@ -122,7 +129,7 @@ const App = () => {
     </div>
   ));
 
-  //render
+  //render product colors
   const renderProductColors = colors.map((color) => (
     <CircleColor
       key={color}
@@ -146,6 +153,10 @@ const App = () => {
       <Modal isOpen={isOpen} closeModal={closeModal} title="Add a new Product">
         <form onSubmit={handleSubmit}>
           {renderFormInputList}
+          <Select
+            selected={selectedCategory}
+            setSelected={setSelectedCategory}
+          />
           <div style={{ width: "300px" }}>{renderProductColors}</div>
           <div
             style={{

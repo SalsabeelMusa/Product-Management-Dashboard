@@ -10,7 +10,12 @@ export const productValidation = (product: {
   image: string;
   price: string;
 }): ValidationErrors => {
-  const errors: ValidationErrors = {};
+  const errors: ValidationErrors = {
+    title: "",
+    description: "",
+    image: "",
+    price: "",
+  };
 
   if (!product.title.trim()) {
     errors.title = "Title is required.";
