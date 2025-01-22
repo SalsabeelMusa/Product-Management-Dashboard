@@ -19,6 +19,11 @@ import Select from "./components/Select";
 
 const App = () => {
   //STATES
+  const [editedProduct, setEditedPorduct] = useState<IProduct>();
+  const [isEditOpen, setEditIsOpen] = useState(false);
+  const closeEditModal = () => setEditIsOpen(false);
+  const openEditModal = () => setEditIsOpen(true);
+
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<IProduct>({
     id: "",
@@ -35,6 +40,7 @@ const App = () => {
   const [selectedCategory, setSelectedCategory] = useState<ICategory>(
     categories[0]
   );
+
   //HANDLERS
   function closeModal() {
     setFormData({
@@ -129,6 +135,29 @@ const App = () => {
     </div>
   ));
 
+  //render EDIT form inputs
+  const renderEditInputList = formInputList.map((input) => (
+    <div key={input.id}>
+      <label htmlFor={input.id}>{input.label}</label>
+      <Input
+        type={input.type}
+        id={input.id}
+        name={input.name}
+        value={editedProduct?.[input.name] || ""}
+        onChange={(event) => {
+          const { name, value } = event.target;
+          setEditedPorduct((prev) =>
+            prev ? { ...prev, [name]: value } : undefined
+          );
+        }}
+      />
+
+      {/* {formErrors[input.name] && (
+        <div className="error-message">{formErrors[input.name]}</div>
+      )} */}
+    </div>
+  ));
+
   //render product colors
   const renderProductColors = colors.map((color) => (
     <CircleColor
@@ -144,12 +173,29 @@ const App = () => {
       }}
     />
   ));
+  /*______________Handle Edit_________________*/
+  function handleEdit(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    if (!editedProduct) return;
+
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === editedProduct.id ? editedProduct : product
+      )
+    );
+
+    closeEditModal();
+  }
 
   return (
     <>
       <Button onClick={openModal}>Add a Product</Button>
-
-      <ProductList products={products} />
+      <ProductList
+        products={products}
+        setEditedPorduct={setEditedPorduct}
+        openEditModal={openEditModal}
+      />
+      /* _______________Add a New Product Modal_____________________ */
       <Modal isOpen={isOpen} closeModal={closeModal} title="Add a new Product">
         <form onSubmit={handleSubmit}>
           {renderFormInputList}
@@ -166,6 +212,73 @@ const App = () => {
             }}
           >
             {productColors.map((color) => (
+              <span
+                key={uuidv4()}
+                style={{
+                  display: "inline-block",
+                  backgroundColor: color,
+                  margin: "2px",
+                  fontSize: "15px",
+                  borderRadius: "10%",
+                  padding: "2px",
+                }}
+              >
+                {color}
+              </span>
+            ))}
+          </div>
+          <Button type="submit">Add</Button>
+          <Button type="button" onClick={closeModal}>
+            Cancel
+          </Button>
+        </form>
+      </Modal>
+      /* ________________Edit a Product Modal_____________________ */
+      <Modal
+        isOpen={isEditOpen}
+        closeModal={closeEditModal}
+        title="Edit Product"
+      >
+        <form onSubmit={handleEdit}>
+          {renderEditInputList}
+          /*_______ Category Selection_____________ */
+          <Select
+            selected={editedProduct?.category || categories[0]}
+            setSelected={(newCategory) =>
+              setEditedPorduct((prev) =>
+                prev ? { ...prev, category: newCategory } : undefined
+              )
+            }
+          />
+          /* _______Render product colors _______*/
+          <div style={{ width: "300px" }}>
+            {colors.map((color) => (
+              <CircleColor
+                key={color}
+                color={color}
+                onClick={() => {
+                  setEditedPorduct((prev) => {
+                    if (!prev) return prev;
+
+                    const updatedColors = prev.colors.includes(color)
+                      ? prev.colors.filter((c) => c !== color) // Remove if already selected
+                      : [...prev.colors, color]; // Add if not selected
+
+                    return { ...prev, colors: updatedColors };
+                  });
+                }}
+              />
+            ))}
+          </div>
+          /* __________Display selected colors ____________*/
+          <div
+            style={{
+              width: "300px",
+              color: "white",
+              padding: "10px",
+            }}
+          >
+            {editedProduct?.colors.map((color) => (
               <span
                 key={uuidv4()}
                 style={{

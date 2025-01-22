@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IProduct, productData } from "../dataSource";
 import "../styles/productList.css";
 
@@ -57,17 +57,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
 };
 interface ProductListProps {
   products: IProduct[];
+  setEditedPorduct: (product: IProduct) => void;
+  openEditModal: () => void;
 }
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
-  const handleEdit = (id: string) => {
-    console.log("Editing product with ID:", id);
-  };
 
+const ProductList: React.FC<ProductListProps> = ({
+  products,
+  setEditedPorduct,
+  openEditModal,
+}) => {
+  // __________________________________________Edit Product________________________________
+
+  const handleEdit = (product: IProduct) => {
+    console.log("Editing product with id:", product.id);
+    setEditedPorduct(product);
+    openEditModal();
+  };
+  // _______________________________________________________________________________________
   const handleRemove = (id: string) => {
     console.log("Removing product with ID:", id);
   };
 
-  console.log(products.length);
+  // console.log(products.length);
   return (
     <div className="product-list">
       {products.map((product) => (
@@ -79,7 +90,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
           colors={product.colors}
           price={product.price}
           category={product.category}
-          onEdit={() => handleEdit(product.id)}
+          onEdit={() => handleEdit(product)}
           onRemove={() => handleRemove(product.id)}
         />
       ))}
