@@ -18,12 +18,17 @@ import { v4 as uuidv4 } from "uuid";
 import Select from "./components/Select";
 
 const App = () => {
-  //STATES
+  //Edit STATES
   const [editedProduct, setEditedPorduct] = useState<IProduct>();
   const [isEditOpen, setEditIsOpen] = useState(false);
   const closeEditModal = () => setEditIsOpen(false);
   const openEditModal = () => setEditIsOpen(true);
 
+  // DELETE MODAL STATES
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<IProduct | null>(null);
+
+  //Add product states
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<IProduct>({
     id: "",
@@ -117,6 +122,23 @@ const App = () => {
     setProductColors([]);
     closeModal();
   };
+
+  const openDeleteModal = (product: IProduct) => {
+    setProductToDelete(product);
+    setIsDeleteOpen(true);
+  };
+  const closeDeleteModal = () => {
+    setProductToDelete(null);
+    setIsDeleteOpen(false);
+  };
+
+  const handleDelete = () => {
+    if (!productToDelete) return;
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== productToDelete.id)
+    );
+    closeDeleteModal();
+  };
   //render form inputs
   const renderFormInputList = formInputList.map((input) => (
     <div key={input.id}>
@@ -194,6 +216,7 @@ const App = () => {
         products={products}
         setEditedPorduct={setEditedPorduct}
         openEditModal={openEditModal}
+        openDeleteModal={openDeleteModal} // Pass the delete modal function
       />
       /* _______________Add a New Product Modal_____________________ */
       <Modal isOpen={isOpen} closeModal={closeModal} title="Add a new Product">
@@ -299,6 +322,28 @@ const App = () => {
             Cancel
           </Button>
         </form>
+      </Modal>
+      /* ________________Remove a Product Modal_____________________ */
+      {/* DELETE CONFIRMATION MODAL */}
+      <Modal
+        isOpen={isDeleteOpen}
+        closeModal={closeDeleteModal}
+        title="Delete Product"
+      >
+        <p style={{ color: "black" }}>
+          Are you sure you want to delete this product?
+        </p>
+        <p>
+          <strong>{productToDelete?.title}</strong>
+        </p>
+        <div className="modal-actions">
+          <Button onClick={handleDelete} className="confirm-btn">
+            Yes, Delete
+          </Button>
+          <Button onClick={closeDeleteModal} className="cancel-btn">
+            Cancel
+          </Button>
+        </div>
       </Modal>
     </>
   );

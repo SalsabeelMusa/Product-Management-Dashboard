@@ -59,12 +59,14 @@ interface ProductListProps {
   products: IProduct[];
   setEditedPorduct: (product: IProduct) => void;
   openEditModal: () => void;
+  openDeleteModal: (product: IProduct) => void; // Accept delete modal function
 }
 
 const ProductList: React.FC<ProductListProps> = ({
   products,
   setEditedPorduct,
   openEditModal,
+  openDeleteModal,
 }) => {
   // __________________________________________Edit Product________________________________
 
@@ -91,7 +93,7 @@ const ProductList: React.FC<ProductListProps> = ({
           price={product.price}
           category={product.category}
           onEdit={() => handleEdit(product)}
-          onRemove={() => handleRemove(product.id)}
+          onRemove={() => openDeleteModal(product)} // Open delete modal when clicking remove
         />
       ))}
     </div>
